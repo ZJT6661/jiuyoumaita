@@ -34,4 +34,5 @@ android/app/src/main/assets/capacitor.config.json
 android/app/src/main/assets/public
 
 # Capacitor
-capacitor.config.json
+# capacitor.config.json
+# capacitor.config.ts
