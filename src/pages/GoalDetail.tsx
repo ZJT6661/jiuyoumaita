@@ -36,7 +36,14 @@ export default function GoalDetail() {
 
   if (!goal) {
     return (
-      <div className="h-full flex items-center justify-center" style={{ backgroundColor: themeConfig.bg }}>
+      <div 
+        className="min-h-screen flex items-center justify-center" 
+        style={{ 
+          backgroundColor: themeConfig.bg,
+          paddingTop: 'env(safe-area-inset-top)',
+          paddingBottom: 'env(safe-area-inset-bottom)',
+        }}
+      >
         <p style={{ color: themeConfig.text }}>目标不存在</p>
       </div>
     );
@@ -80,9 +87,18 @@ export default function GoalDetail() {
   };
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ backgroundColor: themeConfig.bg }}>
+    <div 
+      className="min-h-screen w-full flex flex-col overflow-hidden" 
+      style={{ 
+        backgroundColor: themeConfig.bg,
+        paddingTop: 'env(safe-area-inset-top)',
+        paddingBottom: 'env(safe-area-inset-bottom)',
+        paddingLeft: 'env(safe-area-inset-left)',
+        paddingRight: 'env(safe-area-inset-right)',
+      }}
+    >
       <div className="flex-1 overflow-y-auto">
-        <div className="px-5 pt-12 pb-6 pt-safe">
+        <div className="px-5 pt-6 pb-6">
           <div className="flex items-center gap-4 mb-6">
             <button
               onClick={() => navigate(-1)}
@@ -239,11 +255,11 @@ export default function GoalDetail() {
               )}
             </div>
           </div>
-          <div className="h-32"></div>
+          <div className="h-24"></div>
         </div>
       </div>
 
-      <div className="px-5 pb-8 pb-safe">
+      <div className="px-5 pb-4">
         <button
           onClick={() => setIsDepositModalOpen(true)}
           className="w-full max-w-md mx-auto py-4 rounded-2xl font-bold text-lg text-white flex items-center justify-center gap-2 shadow-lg transition-all hover:opacity-90 active:scale-[0.98]"

@@ -57,9 +57,18 @@ export default function Settings() {
   };
 
   return (
-    <div className="h-full flex flex-col overflow-hidden" style={{ backgroundColor: themeConfig.bg }}>
+    <div 
+      className="min-h-screen w-full flex flex-col overflow-hidden" 
+      style={{ 
+        backgroundColor: themeConfig.bg,
+        paddingTop: 'env(safe-area-inset-top)',
+        paddingBottom: 'env(safe-area-inset-bottom)',
+        paddingLeft: 'env(safe-area-inset-left)',
+        paddingRight: 'env(safe-area-inset-right)',
+      }}
+    >
       <div className="flex-1 overflow-y-auto">
-        <div className="px-5 pt-12 pb-8 pt-safe">
+        <div className="px-5 pt-6 pb-8">
           <div className="flex items-center gap-4 mb-8">
             <Link
               to="/"
