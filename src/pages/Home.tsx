@@ -50,7 +50,7 @@ export default function Home() {
       }}
     >
       <div className="flex-1 overflow-y-auto">
-        <div className="px-5 pt-6 pb-6">
+        <div className="px-5 pt-10 pb-6">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h1
@@ -171,11 +171,11 @@ export default function Home() {
               </div>
             )}
           </div>
-          <div className="h-24"></div>
+          <div className="h-12"></div>
         </div>
       </div>
 
-      <div className="px-5 pb-4">
+      <div className="px-5 pb-6">
         <button
           onClick={() => setIsCreateModalOpen(true)}
           className="w-full max-w-md mx-auto py-4 rounded-2xl font-bold text-lg text-white flex items-center justify-center gap-2 shadow-lg transition-all hover:opacity-90 active:scale-[0.98]"
