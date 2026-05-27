@@ -1,97 +1,112 @@
-
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Trash2, CheckCircle2 } from 'lucide-react';
-import { Goal, ThemeConfig } from '../types';
-import { formatCurrency } from '../utils/formatters';
+import { Link } from 'react-router-dom';
+import { Trash2, CreditCard } from 'lucide-react';
+import { Goal, ThemeConfig, BankCard } from '../types';
+import { formatCurrency, formatDate } from '../utils/formatters';
 import ProgressBar from './ProgressBar';
 
 interface GoalCardProps {
   goal: Goal;
   theme: ThemeConfig;
+  bankCards: BankCard[];
   onDelete: (id: string) => void;
 }
 
-const GoalCard: React.FC<GoalCardProps> = ({ goal, theme, onDelete }) => {
-  const navigate = useNavigate();
+export default function GoalCard({ goal, theme, bankCards, onDelete }: GoalCardProps) {
   const percentage = Math.min(100, Math.max(0, (goal.currentAmount / goal.targetAmount) * 100));
-  
-  const handleClick = (e: React.MouseEvent) => {
-    if (!(e.target as HTMLElement).closest('button')) {
-      navigate(`/goal/${goal.id}`);
-    }
-  };
-  
-  return (
-    <div
-      onClick={handleClick}
-      className="relative p-5 rounded-2xl cursor-pointer transition-all duration-300 hover:shadow-lg active:scale-[0.98]"
-      style={{
-        backgroundColor: theme.bgSecondary,
-        boxShadow: '0 4px 15px rgba(0,0,0,0.05)',
-      }}
-    >
-      {goal.isCompleted && (
-        <div className="absolute top-3 right-3">
-          <CheckCircle2 size={24} color={theme.primary} />
-        </div>
-      )}
-      
-      <div className="mb-4">
-        <h3 
-          className="text-xl font-bold mb-1"
-          style={{ color: theme.text }}
-        >
-          {goal.name}
-        </h3>
-      </div>
-      
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <div>
-          <p className="text-sm mb-1" style={{ color: theme.textSecondary }}>已存</p>
-          <p 
-            className="text-lg font-bold"
-            style={{ color: theme.primary }}
-          >
-            {formatCurrency(goal.currentAmount)}
-          </p>
-        </div>
-        <div className="text-right">
-          <p className="text-sm mb-1" style={{ color: theme.textSecondary }}>目标</p>
-          <p 
-            className="text-lg font-bold"
-            style={{ color: theme.text }}
-          >
-            {formatCurrency(goal.targetAmount)}
-          </p>
-        </div>
-      </div>
-      
-      <ProgressBar 
-        current={goal.currentAmount} 
-        target={goal.targetAmount} 
-        theme={theme}
-        size="medium"
-      />
-      
-      {!goal.isCompleted && percentage < 100 && (
-        <p className="mt-2 text-sm text-center" style={{ color: theme.textSecondary }}>
-          还差 {formatCurrency(goal.targetAmount - goal.currentAmount)}
-        </p>
-      )}
-      
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          onDelete(goal.id);
-        }}
-        className="absolute bottom-3 right-3 p-2 rounded-full hover:bg-red-50 transition-colors"
-        style={{ color: '#EF4444' }}
-      >
-        <Trash2 size={18} />
-      </button>
-    </div>
-  );
-};
+  const associatedCard = goal.bankCardId ? bankCards.find(c => c.id === goal.bankCardId) : null;
 
-export default GoalCard;
+  return (
+    <Link
+      to={`/goal/${goal.id}`}
+      className="block p-4 rounded-2xl transition-all hover:opacity-90 active:scale-[0.98]"
+      style={{ backgroundColor: theme.bgSecondary }}
+    >
+      <div className="flex gap-4">
+        {goal.image ? (
+          <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
+            <img
+              src={goal.image}
+              alt={goal.name}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ) : (
+          <div
+            className="w-20 h-20 rounded-xl flex items-center justify-center flex-shrink-0"
+            style={{ backgroundColor: theme.primary + '20' }}
+          >
+            <span
+              className="text-xl font-bold"
+              style={{ color: theme.primary }}
+            >
+              {goal.name.charAt(0)}
+            </span>
+          </div>
+        )}
+
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start justify-between">
+            <div>
+              <h3
+                className="font-bold text-lg truncate"
+                style={{ color: theme.text }}
+              >
+                {goal.name}
+              </h3>
+              <p
+                className="text-xs mt-1"
+                style={{ color: theme.textSecondary }}
+              >
+                {formatDate(goal.createdAt)}
+              </p>
+            </div>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                onDelete(goal.id);
+              }}
+              className="p-2 rounded-lg hover:bg-red-100 transition-colors"
+              style={{ color: '#EF4444' }}
+            >
+              <Trash2 size={18} />
+            </button>
+          </div>
+
+          {associatedCard && (
+            <div className="flex items-center gap-2 mt-2">
+              <CreditCard size={14} style={{ color: theme.textSecondary }} />
+              <span className="text-xs" style={{ color: theme.textSecondary }}>
+                {associatedCard.bankName} ****{associatedCard.cardNumber.slice(-4)}
+              </span>
+            </div>
+          )}
+
+          <div className="mt-3">
+            <div className="flex justify-between items-center mb-1">
+              <span
+                className="text-sm"
+                style={{ color: theme.textSecondary }}
+              >
+                {formatCurrency(goal.currentAmount)} / {formatCurrency(goal.targetAmount)}
+              </span>
+              <span
+                className="text-sm font-medium"
+                style={{ color: theme.primary }}
+              >
+                {percentage.toFixed(0)}%
+              </span>
+            </div>
+            <ProgressBar
+              current={goal.currentAmount}
+              target={goal.targetAmount}
+              theme={theme}
+              size="small"
+              showText={false}
+            />
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+}

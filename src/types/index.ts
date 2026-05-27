@@ -1,9 +1,14 @@
-
 export interface Deposit {
   id: string;
   amount: number;
   date: string;
   note?: string;
+}
+
+export interface BankCard {
+  id: string;
+  bankName: string;
+  cardNumber: string;
 }
 
 export interface Goal {
@@ -14,6 +19,8 @@ export interface Goal {
   createdAt: string;
   isCompleted: boolean;
   deposits: Deposit[];
+  image?: string;
+  bankCardId?: string;
 }
 
 export type Theme = 'orange' | 'mint' | 'blue' | 'purple' | 'dark';
@@ -27,6 +34,11 @@ export interface ThemeConfig {
   bgSecondary: string;
   text: string;
   textSecondary: string;
+}
+
+export interface AppSettings {
+  requirePasswordForDelete: boolean;
+  deletePassword?: string;
 }
 
 export const themes: Record<Theme, ThemeConfig> = {

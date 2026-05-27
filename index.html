@@ -1,10 +1,42 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Trae Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#FF6B35" />
+    <meta name="msapplication-navbutton-color" content="#FF6B35" />
+    <meta name="apple-mobile-web-app-title" content="就要买它" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <title>就要买它</title>
+    <style>
+      * {
+        -webkit-tap-highlight-color: transparent;
+        box-sizing: border-box;
+      }
+      html, body, #root {
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #FFF8F5;
+      }
+      body {
+        overscroll-behavior: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+      #root {
+        position: relative;
+        min-height: 100vh;
+        min-width: 100vw;
+      }
+    </style>
     <script type="module">
       if (import.meta.hot?.on) {
         import.meta.hot.on('vite:error', (error) => {

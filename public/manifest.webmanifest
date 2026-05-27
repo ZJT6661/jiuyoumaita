@@ -1,0 +1,12 @@
+{
+  "name": "就要买它",
+  "short_name": "就要买它",
+  "description": "为你的目标而攒钱",
+  "start_url": "/",
+  "display": "standalone",
+  "fullscreen": true,
+  "orientation": "portrait-primary",
+  "background_color": "#FFF8F5",
+  "theme_color": "#FF6B35",
+  "icons": []
+}
